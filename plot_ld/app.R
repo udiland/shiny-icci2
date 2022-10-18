@@ -172,18 +172,18 @@ server <- function(input, output) {
     # get genotype data
     if(input$chr_data == "pruned"){
       if(input$chr == "Un"){
-        fread("/storage/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr8.hmp.txt", sep = '\t', head=T)
+        fread("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr8.hmp.txt", sep = '\t', head=T)
         
       } else(
-        fread(paste0("/storage/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
+        fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
       )
     }
     if(input$chr_data == "filtered"){
       if(input$chr == "Un"){
-        fread("/storage/udiland/gwas/snp/data/geno/all_samples/long_chr8.hmp.txt", sep = '\t', head=T)
+        fread("/home/udiland/gwas/snp/data/geno/all_samples/long_chr8.hmp.txt", sep = '\t', head=T)
         
       } else(
-        fread(paste0("/storage/udiland/gwas/snp/data/geno/all_samples/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
+        fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
         # load snp data
         #fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
         )
