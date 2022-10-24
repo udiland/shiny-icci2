@@ -131,7 +131,7 @@ server <- function(input, output) {
                       "\nChromosome: ", GLM$Chromosome, "\nFDR:", -log10(GLM$FDR_Adjusted_P.values) %>% round(2),
                       "\nMAF:", GLM$maf %>% round(4), "\nModel:", GLM$model, sep = "")
     
-    GLM$link <- paste("http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
+    GLM$link <- paste("http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
                       "chr", GLM$Chromosome, "%3A" ,GLM$Position, "%2D", GLM$Position,
                       "&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin", sep="")
     }
@@ -167,7 +167,7 @@ server <- function(input, output) {
                       "\nChromosome: ", MLM$Chromosome, "\nFDR:", -log10(MLM$FDR_Adjusted_P.values) %>% round(2),
                       "\nMAF:", MLM$maf %>% round(4), "\nModel:", MLM$model, sep = "")
     
-    MLM$link <- paste("http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
+    MLM$link <- paste("http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
                       "chr", MLM$Chromosome, "%3A" ,MLM$Position, "%2D", MLM$Position,
                       "&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin", sep="")
     }
@@ -215,7 +215,7 @@ server <- function(input, output) {
                           "\nChromosome: ", MLM$Chromosome, "\nFDR:", -log10(MLM$FDR_Adjusted_P.values) %>% round(2),
                           "\nMAF:", MLM$maf %>% round(4), "\nModel:", MLM$model, sep = "")
         
-        MLM$link <- paste("http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
+        MLM$link <- paste("http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
                           "chr", MLM$Chromosome, "%3A" ,MLM$Position, "%2D", MLM$Position,
                           "&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin", sep="")
       }
@@ -251,7 +251,7 @@ server <- function(input, output) {
                        "\nChromosome: ", MLMM$Chromosome, "\nFDR:", -log10(MLMM$FDR_Adjusted_P.values) %>% round(2),
                        "\nMAF:", MLMM$maf %>% round(4), "\nModel:", MLMM$model, sep = "")
     
-    MLMM$link <- paste("http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
+    MLMM$link <- paste("http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
                        "chr", MLMM$Chromosome, "%3A" ,MLMM$Position, "%2D", MLMM$Position,
                        "&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin", sep="")
     
@@ -289,7 +289,7 @@ server <- function(input, output) {
                        "\nChromosome: ", farm$Chromosome, "\nFDR:", -log10(farm$FDR_Adjusted_P.values) %>% round(2),
                        "\nMAF:", farm$maf %>% round(4), "\nModel:", farm$model, sep = "")
     
-    farm$link <- paste("http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
+    farm$link <- paste("http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
                        "chr", farm$Chromosome, "%3A" ,farm$Position, "%2D", farm$Position,
                        "&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin", sep="")
     
@@ -326,7 +326,7 @@ server <- function(input, output) {
                         "\nChromosome: ", blink$Chromosome, "\nFDR:", -log10(blink$FDR_Adjusted_P.values) %>% round(2),
                         "\nMAF:", blink$maf %>% round(4), "\nModel:", blink$model, sep = "")
     
-    blink$link <- paste("http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
+    blink$link <- paste("http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=",
                         "chr", blink$Chromosome, "%3A" ,blink$Position, "%2D", blink$Position,
                         "&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin", sep="")
     

@@ -8,7 +8,7 @@ library(data.table)
 render <- c(
   "function(data, type, row){",
   "  if(type === 'display'){",
-  "    var a = '<a href=\"http://icci-1.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr' + row[2] + '%3A' + row[3] + '%2D' + row[3] + '&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin' + '\">' + data + '</a>';",
+  "    var a = '<a href=\"http://icci-2.tau.ac.il:8000/cgi-bin/hgTracks?db=hub_112_Longissima&lastVirtModeType=default&lastVirtModeExtraState=&virtModeType=default&virtMode=0&nonVirtPosition=&position=chr' + row[2] + '%3A' + row[3] + '%2D' + row[3] + '&hgsid=329_aFWaA0H7kp7ROLdvGJNjECGBoAin' + '\">' + data + '</a>';",
   "    return a;",
   "  } else {",
   "    return data;",
