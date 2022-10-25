@@ -8,7 +8,7 @@ myY <- read.table("/home/username/../phenotype.tsv", sep='\t', head=T)
 myY[,2] <- as.numeric(myY[,2])
 
 
-# Read genomic data - this will load the LD fiiltered file with snps in all chromosomes
+# Read genomic data - this will load the LD filtered file with snps in all chromosomes
 myG <- read.table("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_all_pruned.hmp.txt", sep='\t', comment.char = "", head=F)
 
 
