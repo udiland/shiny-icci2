@@ -17,5 +17,6 @@ myGAPIT <- GAPIT(
   Y=myY,
   PCA.total=2,
   G=myG,
+# the models to run
   model=c("GLM","MLM", "MLMM", "FarmCPU", "Blink")
 )
