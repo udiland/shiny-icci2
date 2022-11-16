@@ -108,6 +108,9 @@ server <- function(input, output) {
     # create an empty data frame with column names
     tbl <- data.table(matrix(ncol = 7, nrow = 0))
     colnames(tbl) <- c("SNP", "Chromosome", "Position", "P.value", "maf", "FDR_Adjusted_P.values", "Trait")
+    # no maf
+    #tbl <- data.table(matrix(ncol = 6, nrow = 0))
+    #colnames(tbl) <- c("SNP", "Chromosome", "Position", "P.value", "FDR_Adjusted_P.values", "Trait")
     # create list of files with the user selected model
     files = c()
     for (i in seq_along(values$files)){
@@ -119,6 +122,8 @@ server <- function(input, output) {
 
       res <- read.table(f, header = T, sep = ",")
       res <- res[c("SNP", "Chromosome", "Position", "P.value", "maf", "FDR_Adjusted_P.values")]
+      # no maf
+      #res <- res[c("SNP", "Chromosome", "Position", "P.value", "FDR_Adjusted_P.values")]
       # filter for LOD
       res <- res[-log10(res$P.value) >= input$logpv ,]
       
@@ -131,13 +136,16 @@ server <- function(input, output) {
     }
     
     # summarise by snp, chrom, position,maf
-    snps <- tbl %>% group_by(SNP, Chromosome, Position, maf) %>% summarize(Trait = paste0(Trait, collapse = ','),
+    #snps <- tbl %>% group_by(SNP, Chromosome, Position, maf) %>% summarize(Trait = paste0(Trait, collapse = ','),
+    #                                            n_trait = length(strsplit(Trait, ",")[[1]]))
+    # no maf
+    snps <- tbl %>% group_by(SNP, Chromosome, Position) %>% summarize(Trait = paste0(Trait, collapse = ','),
                                                 n_trait = length(strsplit(Trait, ",")[[1]]))
-    
+
     # a function to take the 'experiment name' form column 'Trait' in a row
     f <- function(x){
       vec = vector()
-      for (i in strsplit(x[5], ",")[[1]]){
+      for (i in strsplit(x[4], ",")[[1]]){
         exp <- trimws(strsplit(i, "_")[[1]][1])
         vec <- append(vec,exp)}
       return(vec)}
