@@ -43,6 +43,9 @@ get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4
   # fix chron names
   z$Chromosome <- paste0("chr", z$Chromosome)
   
+  #fix chrUN
+  z$Chromosome <- ifelse(z$Chromosome == "chrUN", "chrUn", z$Chromosome)
+  
   # for each locus get the gene names (give a list that each item is a locus and the content is a vector of gene names)
   genes <- lapply(unique(z$locusID), function(loci) {
     w <- z[z$locusID == loci, ]
@@ -55,6 +58,12 @@ get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4
   })
   
   
+  # check if no gene has found
+  if (identical(unique(genes)[[1]], character(0))){
+    return(list(0, data.table()))
+  }
+  
+
   new_loci_lst <- list(1)# list with one elemnt equal to 1
   k <- 1
   for(i in 2:length(genes)) {
@@ -65,7 +74,7 @@ get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4
       new_loci_lst[[k]] <- i
     }
   }
-  
+
   # create new genes list for the new loci ID
   new_genes <- list()
   lociID <- rep(0, nrow(z))
@@ -81,11 +90,10 @@ get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4
   stopifnot(length(unlist(genes_in_loci_lst)) == length(unique(unlist(genes_in_loci_lst))))
   z$locusID <- lociID
   rm(lociID, new_genes, k, i)
-  
+
   # sort snps table by locusID and lod score and rename it
   z <- z[order(z$locusID, -z$lod), ]
   loci_nfo <- z
-  
   # how many genes in each locus?
   ngenes <- sapply(genes_in_loci_lst, length)
   
@@ -168,6 +176,7 @@ get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4
   gene_nfo <- cbind(gene_nfo, runs_by_loci)
   
   return(list(loci_nfo, gene_nfo))
+
 }
   
 #a <- get_loci_tbl(gwas, longissima_genes, locus.range = 1e6)
