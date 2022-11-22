@@ -53,6 +53,7 @@ ui <- fluidPage(
 
   fluidRow(
     column(3,
+           
   # create a selection pan for input files
   shinyDirButton(id = "folder", label = "Choose folder", title = "Choose GAPIT results folder"),
 
@@ -67,16 +68,22 @@ ui <- fluidPage(
 
   #select locus width
   numericInput(inputId = "locus", label = "Locus width", 1e4),
+  
 
   # create a run button for creating the loci table
-  actionButton("get_table", "Create loci table")
+  actionButton("get_table", "Create loci table"),
+  
+  verbatimTextOutput(outputId = "x4")
+  
     ),
 
 column(9,
+       
        conditionalPanel(
          condition = "input.get_table > 0",
          # show table
          shinycssloaders::withSpinner(DTOutput("table"))
+
                         )
      )
   ),
@@ -145,28 +152,41 @@ server <- function(input, output) {
   # create a table of loci 
   genes_tbl <- get_loci_tbl(gwas, longissima_genes, lod.thresh = input$lod, locus.range = input$locus, maf.thr = input$maf)[[2]]
   
+  if (identical(genes_tbl, data.table())){
+      output$x4 <- renderText('No genes in range')
+      output$table <- renderDT(genes_tbl)
+      }else{
+  
+  # if (identical(genes_tbl, data.table())){
+  #   output$table <- renderDT(genes_tbl)
+  # }
+  
+  # browser()
+  
   # stack the columns of Run id
   genes_tbl <- data.frame(genes_tbl[,c(1:15)], stack(genes_tbl[16:ncol(genes_tbl)]))
-  
+
   genes_tbl <- genes_tbl[!(genes_tbl$values == '.') ,]
-  
+
   # group bi loci id (this table will be displaied)
   loci_tbl <- genes_tbl %>% group_by(locusID) %>% summarise(chrom=chrom, start=min(pos_i), end=max(pos_f),
                                                             best_SNP_lod = max(best_SNP_lod),
                                                             n_genes_in_loci=n(),
                                                             genes_names=paste0(gene, collapse=", "),
                                                             Model= values) %>% distinct()
-  
+
 
   # save to reactive value
-  
+
   values$loci_tbl <- loci_tbl
 
   values$genes_tbl <- genes_tbl
-  
+
   output$table <- renderDT(loci_tbl, selection = 'single')
-  
+      } # close the else
   })
+  
+  
   
   snps <- req(reactive({
     # get genotype data
