@@ -163,10 +163,10 @@ makeLDplot <- function(gwas, longissima_genes, snp, genes, plotTitle,
   # get genes coordination
   genes_info <- longissima_genes[ match(names(genes),longissima_genes$gene), c("chrom","pos_i","pos_f", "strand", "gene")]
   
-  #change gwas chrom name so it match with all gene data chrom names
-  if (gwas$Chromosome[0] == "UN") {
-     gwas$Chromosome <- "chrUn"} else {  
-     gwas$Chromosome <- paste("chr", gwas$Chromosome, sep = "")}
+  # #change gwas chrom name so it match with all gene data chrom names
+  # if (gwas$Chromosome[0] == "UN") {
+  #    gwas$Chromosome <- "chrUn"} else {  
+  #    gwas$Chromosome <- paste("chr", gwas$Chromosome, sep = "")}
   
   # take all snps rows in the range of [minimum gene start - window down, maximum gene end + window up]
   rows_snps_in_loci <- which(gwas[,Chromosome] == genes_info[1,1] & gwas[,Position] >= min(genes_info$pos_i) - winDown &

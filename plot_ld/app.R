@@ -192,7 +192,8 @@ server <- function(input, output) {
     # get genotype data
     if(input$chr_data == "pruned"){
       if(input$chr == "Un"){
-        fread("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr8.hmp.txt", sep = '\t', head=T)
+        # fread("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr8.hmp.txt", sep = '\t', head=T)
+        fread("/Users/udila/Downloads/long_chr8.hmp.txt", sep = '\t', head=T)
         
       } else(
         fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
@@ -245,7 +246,6 @@ server <- function(input, output) {
     
     plot <- makeLDplot(gwas, longissima_genes, snps(), genes2plot, plotTitle, input$lodfilter, input$lodmax, input$winup, input$windown)
     
-  
   # plot output
   output$loci <- renderPlot(plot)
   
