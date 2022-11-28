@@ -157,10 +157,6 @@ server <- function(input, output) {
       output$table <- renderDT(genes_tbl)
       }else{
   
-  # if (identical(genes_tbl, data.table())){
-  #   output$table <- renderDT(genes_tbl)
-  # }
-  
   # browser()
   
   # stack the columns of Run id
@@ -192,8 +188,8 @@ server <- function(input, output) {
     # get genotype data
     if(input$chr_data == "pruned"){
       if(input$chr == "Un"){
-        # fread("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr8.hmp.txt", sep = '\t', head=T)
-        fread("/Users/udila/Downloads/long_chr8.hmp.txt", sep = '\t', head=T)
+        fread("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr8.hmp.txt", sep = '\t', head=T)
+        #fread("/Users/udila/Downloads/long_chr8.hmp.txt", sep = '\t', head=T)
         
       } else(
         fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
@@ -242,10 +238,14 @@ server <- function(input, output) {
     plotTitle<-paste0(run,"_",names(gen_traits$genes)) 
     } else (plotTitle <- input$plot_title)
     
-    print(paste0("Plotting:", run, collapse = " "))
+    print(paste0("Ploting:", run, collapse = " "))
     
+
     plot <- makeLDplot(gwas, longissima_genes, snps(), genes2plot, plotTitle, input$lodfilter, input$lodmax, input$winup, input$windown)
     
+    if (identical(class(plot), "character")){
+      output$x4 <- renderText(plot)}
+      
   # plot output
   output$loci <- renderPlot(plot)
   
