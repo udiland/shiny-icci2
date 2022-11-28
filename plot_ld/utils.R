@@ -127,7 +127,8 @@ get_ld <- function(snps_gwas, snps_hmp){
   
   # order the table by the value of lod score of each accession (column)
   # get the index of samples in res_t by the location in the snps_gwas table that is sorted by lod score 
-  col_numbers <-match( snps_gwas$SNP ,colnames(res_t))
+  col_numbers <- match(snps_gwas$SNP ,colnames(res_t))
+  col_numbers <- col_numbers[!is.na(col_numbers)]
   res_t <- res_t[, c(col_numbers)]
   
   data <- makeGenotypes(res_t)
@@ -149,7 +150,7 @@ get_ld <- function(snps_gwas, snps_hmp){
 ########################################################################################
 
 # make plot
-makeLDplot <- function(gwas, longissima_genes, snp, genes, plotTitle,
+makeLDplot <- function(gwas, longissima_genes, snps, genes, plotTitle,
                        lodFilter, lodMax, winUp, winDown)
 {    
   
@@ -160,13 +161,16 @@ makeLDplot <- function(gwas, longissima_genes, snp, genes, plotTitle,
   # store vector of lod scores
   lod <- gwas$lod
   
+  
   # get genes coordination
   genes_info <- longissima_genes[ match(names(genes),longissima_genes$gene), c("chrom","pos_i","pos_f", "strand", "gene")]
   
-  # #change gwas chrom name so it match with all gene data chrom names
-  # if (gwas$Chromosome[0] == "UN") {
-  #    gwas$Chromosome <- "chrUn"} else {  
+  #change gwas chrom name so it match with all gene data chrom names
+  # if (gwas$Chromosome[1] == "UN") {
+  #    gwas$Chromosome <- "chrUn"} else {
   #    gwas$Chromosome <- paste("chr", gwas$Chromosome, sep = "")}
+  
+  gwas$Chromosome <- ifelse(gwas$Chromosome == "UN", "chrUn", paste("chr", gwas$Chromosome, sep = ""))
   
   # take all snps rows in the range of [minimum gene start - window down, maximum gene end + window up]
   rows_snps_in_loci <- which(gwas[,Chromosome] == genes_info[1,1] & gwas[,Position] >= min(genes_info$pos_i) - winDown &
@@ -187,18 +191,18 @@ makeLDplot <- function(gwas, longissima_genes, snp, genes, plotTitle,
   best_snp_lod_index <- which.max(lod[rows_snps_in_loci])
   #stopifnot(best_snp_lod_index == nrow(data_for_plot))
   
+
   # take relevant snps from gwas results
   snps_gwas <- gwas[rows_snps_in_loci, ]
-  
-  # get the LD R^2 calculations for the best snp
-  ld <- get_ld(snps_gwas, snp)
+
+    # get the LD R^2 calculations for the best snp
+  ld <- get_ld(snps_gwas, snps)
   # give the ref snp value of 1
   ld[1] <- 1
   # if some snp hase no value st it to 0
   ld[is.na(ld)] <- 0
   
 
-  
   # take the data of best snps
   best_snp <- data_for_plot[best_snp_lod_index ,]
   
