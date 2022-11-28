@@ -202,7 +202,7 @@ server <- function(input, output) {
       } else(
         fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
         # load snp data
-        #fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
+        # fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
         )
     }
   }))
@@ -248,12 +248,11 @@ server <- function(input, output) {
       
   # plot output
   output$loci <- renderPlot(plot)
-  
   # download the graph
   output$downloadPlot <- downloadHandler(
     filename = paste(plotTitle,".png", sep = ""),
     content = function(file) {
-      ggbio::ggsave(file, plot, units = c("cm"))})
+      ggbio::ggsave(file, plot = plot, units = c("cm"))})
   
             }) # close obsereEvent
   
