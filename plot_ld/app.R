@@ -255,7 +255,6 @@ server <- function(input, output) {
       ggbio::ggsave(file, plot = plot, units = c("cm"))})
   
             }) # close obsereEvent
-  
 }
 
 shinyApp(ui = ui, server = server)
