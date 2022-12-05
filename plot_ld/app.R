@@ -248,11 +248,12 @@ server <- function(input, output) {
       
   # plot output
   output$loci <- renderPlot(plot)
+  
   # download the graph
   output$downloadPlot <- downloadHandler(
     filename = paste(plotTitle,".png", sep = ""),
     content = function(file) {
-      ggbio::ggsave(file, plot = plot, units = c("cm"))})
+      ggbio::ggsave(file, plot)})
   
             }) # close obsereEvent
 }
