@@ -109,7 +109,7 @@ get_ld <- function(snps_gwas, snps_hmp){
   snps_gwas <- snps_gwas[order(-snps_gwas$lod) ,]
   # take snps names
   snps_in_loci <- snps_gwas$SNP
-  
+
   # select only snps in loci
   snps <- snps_hmp[snps_hmp$`rs#` %in% snps_in_loci ,]
   
@@ -151,9 +151,8 @@ get_ld <- function(snps_gwas, snps_hmp){
 
 # make plot
 makeLDplot <- function(gwas, longissima_genes, snps, genes, plotTitle,
-                       lodFilter, lodMax, winUp, winDown)
-{    
-  
+                       lodFilter, lodMax, winUp, winDown){    
+
   gwas$lod <- -log10(gwas$P.value)
   gwas <- gwas[gwas$lod > lodFilter, ]
   gwas <- gwas[order(gwas$lod),] # put less significant SNPs first
@@ -175,7 +174,7 @@ makeLDplot <- function(gwas, longissima_genes, snps, genes, plotTitle,
   # take all snps rows in the range of [minimum gene start - window down, maximum gene end + window up]
   rows_snps_in_loci <- which(gwas[,Chromosome] == genes_info[1,1] & gwas[,Position] >= min(genes_info$pos_i) - winDown &
                                gwas[,Position] <= max(genes_info$pos_f) + winUp)
-  
+
   # if there are less than 2 snps there is nothing to plot
   if (length(rows_snps_in_loci) <= 1){
     return("Less than 2 snps in loci ")
@@ -205,6 +204,11 @@ makeLDplot <- function(gwas, longissima_genes, snps, genes, plotTitle,
 
   # take the data of best snps
   best_snp <- data_for_plot[best_snp_lod_index ,]
+  # 
+  # #########################################################################
+  # data_for_plot <- data_for_plot[data_for_plot$Position != "726270616" ,]
+  # best_snp_lod_index <- 49
+  # #######################################################################
   
   # make a table with gene sart gene end for plot shading (geom_rect)
   rects <- data.frame(xstart = genes_info[,2], xend = genes_info[,3])

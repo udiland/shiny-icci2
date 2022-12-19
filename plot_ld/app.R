@@ -8,6 +8,8 @@ library(ggbio)
 library(DT)
 library(data.table)
 library(dplyr)
+options(shiny.maxRequestSize=1000*1024^2)
+
 
 # read genes data (table name is: longissima_genes)
 load("./genes_longissima.Rdata")
@@ -93,7 +95,7 @@ tags$hr(),
   fluidRow(column(3,
                   # choose if the genotype data is of filtered or pruned
                   radioButtons("chr_data", "Genomic data:",
-                               c("LD pruned" = "pruned",
+                               choices=c("LD pruned" = "pruned",
                                  "All SNPs" = "filtered"),
                                selected="All SNPs"),
 
@@ -112,7 +114,7 @@ tags$hr(),
                   # create a run button for creating the loci plot
                   actionButton("get_plot", "Create plot"),
                   # create a button to download the plot
-                  downloadButton("downloadPlot", "Download plot")
+                  downloadButton("downloadPlot", label = "Download plot")
                   
 
     ),
@@ -153,7 +155,7 @@ server <- function(input, output) {
   genes_tbl <- get_loci_tbl(gwas, longissima_genes, lod.thresh = input$lod, locus.range = input$locus, maf.thr = input$maf)[[2]]
   
   if (identical(genes_tbl, data.table())){
-      output$x4 <- renderText('No genes in range')
+      output$x4 <- renderText('No genes in range, try to increase range or lower LOD')
       output$table <- renderDT(genes_tbl)
       }else{
   
@@ -202,8 +204,8 @@ server <- function(input, output) {
       } else(
         fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
         # load snp data
-        # fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
-        )
+        #fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
+      )
     }
   }))
   
@@ -234,28 +236,27 @@ server <- function(input, output) {
     # read gwas results
     gwas <- fread(file.path(values$InputDir, traitcsv[pos])) 
     
+    print(paste0("Ploting: ", run, collapse = " "))
+    
     if (input$plot_title == ""){
-    plotTitle<-paste0(run,"_",names(gen_traits$genes)) 
+      plotTitle<-paste0(run,"_",names(gen_traits$genes))
     } else (plotTitle <- input$plot_title)
     
-    print(paste0("Ploting:", run, collapse = " "))
-    
-
     plot <- makeLDplot(gwas, longissima_genes, snps(), genes2plot, plotTitle, input$lodfilter, input$lodmax, input$winup, input$windown)
     
     if (identical(class(plot), "character")){
       output$x4 <- renderText(plot)}
       
-  # plot output
-  output$loci <- renderPlot(plot)
-  
+   # plot output
+   output$loci <- renderPlot(plot)
+
   # download the graph
-  output$downloadPlot <- downloadHandler(
+   output$downloadPlot <- downloadHandler(
     filename = paste(plotTitle,".png", sep = ""),
     content = function(file) {
-      ggbio::ggsave(file, plot)})
+      ggbio::ggsave(file, plot, units = "cm")})
   
-            }) # close obsereEvent
+  }) # close obsereEvent
 }
 
 shinyApp(ui = ui, server = server)

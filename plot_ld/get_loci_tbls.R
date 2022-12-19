@@ -2,10 +2,9 @@
 
 
 get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4, maf.thr=0.05){
-  
   # combine all tables to one 
   z <- do.call('rbind', gwas)
-  
+
   # sort by chrom and position
   z <- z[order(Chromosome, Position)]
   
@@ -15,10 +14,12 @@ get_loci_tbl <- function(gwas, longissima_genes, lod.thresh=5.3, locus.range=1e4
   #additional filtering of maf
   z <- z[maf > maf.thr ]
   
+  if (identical(dim(z)[1], integer(0))){
+    return(list(0, data.table()))
+  }
   
   # Define loci, group SNPs to loci if they are in the same area as a predefined window (loci_range)
   # if a anp is in the same window of 'loci_range' (default 1e4) assign them to the same group
-  
   
   # first define each snp to different loci (loci=number of snps)
   loci <- rep(1, nrow(z))
