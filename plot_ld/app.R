@@ -254,7 +254,7 @@ server <- function(input, output) {
    output$downloadPlot <- downloadHandler(
     filename = paste(plotTitle,".png", sep = ""),
     content = function(file) {
-      ggbio::ggsave(file, plot, units = "cm")})
+      ggbio::ggsave(file, plot, width = 10, height = 8, units = "cm")})
   
   }) # close obsereEvent
 }
