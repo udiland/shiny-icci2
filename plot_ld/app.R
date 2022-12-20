@@ -204,7 +204,8 @@ server <- function(input, output) {
       } else(
         fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
         # load snp data
-        #fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
+        # fread("/Users/udila/Downloads/long_chr5.hmp.txt", sep = '\t', header = T)
+        # fread("/Users/udila/Downloads/long_chr1.hmp.txt", sep = '\t', header = T)
       )
     }
   }))
@@ -254,7 +255,7 @@ server <- function(input, output) {
    output$downloadPlot <- downloadHandler(
     filename = paste(plotTitle,".png", sep = ""),
     content = function(file) {
-      ggbio::ggsave(file, plot, width = 10, height = 8, units = "cm")})
+      ggbio::ggsave(file, plot, width = 15, height = 8, units = "cm")})
   
   }) # close obsereEvent
 }
