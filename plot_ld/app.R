@@ -194,8 +194,9 @@ server <- function(input, output) {
         #fread("/Users/udila/Downloads/long_chr8.hmp.txt", sep = '\t', head=T)
         
       } else(
-        fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
-      )
+        #fread(paste0("/home/udiland/gwas/snp/data/geno/all_samples/LD_pruned_100/long_chr",input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
+        fread(paste0("/Users/udila/Documents/ICCI/gwas_snp/data/geno/pruned/long_chr", input$chr,".hmp.txt", sep = ""), sep = '\t', head=T)
+        )
     }
     if(input$chr_data == "filtered"){
       if(input$chr == "Un"){
