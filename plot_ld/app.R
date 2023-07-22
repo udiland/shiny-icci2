@@ -95,8 +95,7 @@ tags$hr(),
   fluidRow(column(3,
                   # choose if the genotype data is of filtered or pruned
                   radioButtons("chr_data", "Genomic data:",
-                               choices=c("LD pruned" = "pruned",
-                                 "All SNPs" = "filtered"),
+                               choices=c("All SNPs" = "filtered"),
                                selected="All SNPs"),
 
 
