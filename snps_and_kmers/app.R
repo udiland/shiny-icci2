@@ -5,7 +5,8 @@ library(shinycssloaders)
 library(ggplot2)
 library(dplyr)
 library(ggnewscale)
-options(shiny.maxRequestSize=1000*1024^2)
+library(plotly)
+options(shiny.maxRequestSize=10000*1024^2)
 
 # get the function to create the plot
 source("plot_snp_kmr_function.R")
@@ -47,7 +48,7 @@ ui <- fluidPage(
              fileInput(inputId = "kmers", label = "Upload Kmers data", accept = ".csv"),
              h3("Use the file created in the 'direct' pipline, e.g. 'data_for_plot_pass5.csv'"),
              # sellect p-value cutoff
-             selectInput("pv", "P-value cutoff", c("0.05", "0.01", "0.001"), selected = "0.001"),
+             # selectInput("pv", "SNP P-value cutoff", c("0.05", "0.01", "0.001"), selected = "0.001"),
              # create a run button fo the plot
              actionButton("runPlot", "Run"),
              
@@ -64,6 +65,7 @@ ui <- fluidPage(
       ))))
 
 server <- function(input, output){
+  
   observeEvent(input$runPlot,{
     
     #get the gwas results file:
@@ -77,9 +79,9 @@ server <- function(input, output){
     kmersResults <- read.csv(file$datapath)
     
     # create the plot
-    plt <- plot_snp_kmers(kmersResults, gwasResults, input$pv)
+    plt <- plot_snp_kmers(kmersResults, gwasResults, 0.001)
   
-  output$plot <- renderPlot(plot_snp_kmers(kmersResults, gwasResults, input$pv))
+    output$plot <- renderPlot(plt)
 
   # download plot
   output$downloadPlot <- downloadHandler(

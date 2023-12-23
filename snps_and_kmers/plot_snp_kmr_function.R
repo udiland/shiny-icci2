@@ -74,7 +74,7 @@ plot_snp_kmers <- function(kmer_tbl, gwas_tbl, pv_limit=0.001){
   # add a column name 'size' that hold the number of same value 'logPV' in a window of 10 positions
   don <- don %>% group_by(Chromosome, grp = rep(row_number(), length.out = n(), each = 10), logPV) %>% mutate(size=n())
   
-  
+  # create the plot
   p <- ggplot(data = don, aes(x=BPcum, y=-log10(P.value)), size=size) +
     
     # plot snps
@@ -88,7 +88,6 @@ plot_snp_kmers <- function(kmer_tbl, gwas_tbl, pv_limit=0.001){
     geom_point(aes(x=BPcum, y=logPV, size=size, col=as.factor(don$Chromosome))) +
     
     scale_color_manual(values = rep(c("darkgreen", "green"), 4)) +
-    
     
     # custom X axis:
     scale_x_continuous(label = axisdf$Chromosome, breaks= axisdf$center) +
