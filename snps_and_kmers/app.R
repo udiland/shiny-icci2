@@ -80,15 +80,14 @@ server <- function(input, output){
     plt <- plot_snp_kmers(kmersResults, gwasResults, input$pv)
   
   output$plot <- renderPlot(plot_snp_kmers(kmersResults, gwasResults, input$pv))
-  })
-  
+
   # download plot
   output$downloadPlot <- downloadHandler(
     filename = "plot.png",
     content = function(file) {
-      ggsave(file, plot)}
+      ggsave(file, plt)}
     )
-    
+  })
 }
 
 shinyApp(ui = ui, server = server)
